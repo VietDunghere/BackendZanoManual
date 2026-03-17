@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.test
+.env.production
+.env.local
+.env.development
+
+# Coverage directory
+coverage/
+.nyc_output
+
+# Build/Dist output
+dist/
+build/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,0 +1,55 @@
+const { AppError } = require('../../shared/errors/app-error');
+const { sendSuccess } = require('../../shared/utils/response');
+const {
+	validateRegisterPayload,
+	validateLoginPayload,
+	validateRefreshTokenPayload,
+} = require('./validators/auth.validators');
+
+class AuthController {
+	constructor(authService) {
+		this.authService = authService;
+	}
+
+	async register(req, res) {
+		const { details, value } = validateRegisterPayload(req.body || {});
+		if (details.length > 0) {
+			throw new AppError('Du lieu khong hop le', 400, 'VALIDATION_ERROR', details);
+		}
+
+		const result = await this.authService.register(value);
+		return sendSuccess(res, req, 201, result);
+	}
+
+	async login(req, res) {
+		const { details, value } = validateLoginPayload(req.body || {});
+		if (details.length > 0) {
+			throw new AppError('Du lieu khong hop le', 400, 'VALIDATION_ERROR', details);
+		}
+
+		const result = await this.authService.login(value);
+		return sendSuccess(res, req, 200, result);
+	}
+
+	async refreshToken(req, res) {
+		const { details, value } = validateRefreshTokenPayload(req.body || {});
+		if (details.length > 0) {
+			throw new AppError('Du lieu khong hop le', 400, 'VALIDATION_ERROR', details);
+		}
+
+		const result = await this.authService.refreshToken(value.refreshToken);
+		return sendSuccess(res, req, 200, result);
+	}
+
+	async logout(req, res) {
+		const { details, value } = validateRefreshTokenPayload(req.body || {});
+		if (details.length > 0) {
+			throw new AppError('Du lieu khong hop le', 400, 'VALIDATION_ERROR', details);
+		}
+
+		const result = await this.authService.logout(value.refreshToken);
+		return sendSuccess(res, req, 200, result);
+	}
+}
+
+module.exports = { AuthController };
