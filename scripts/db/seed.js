@@ -1,6 +1,6 @@
-const bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs';
 
-const { pool, withTransaction } = require('../../src/config/database');
+import { pool, withTransaction } from '../../src/configs/database.js';
 
 const ADMIN_PASSWORD = 'Admin@123';
 const STUDENT_PASSWORD = 'Student@123';

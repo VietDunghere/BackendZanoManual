@@ -1,4 +1,4 @@
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
 
 function run(command) {
   console.log(`[db:reset] ${command}`);

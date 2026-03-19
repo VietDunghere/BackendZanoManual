@@ -1,5 +1,5 @@
-const { pool } = require('../../src/config/database');
-const { runMigrations } = require('../../src/database/migrator');
+import { pool } from '../../src/configs/database.js';
+import { runMigrations } from '../../src/db/migrator.js';
 
 async function main() {
   const connection = await pool.getConnection();
