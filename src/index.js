@@ -5,9 +5,9 @@ import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './configs/swagger.js';
 import router from './routers/index.js';
 import { requestLogger } from './configs/logger.js';
-import { traceIdMiddleware } from './handlers/trace-id.js';
-import { notFoundHandler } from './handlers/not-found-handler.js';
-import { errorHandler } from './handlers/error-handler.js';
+import { traceIdMiddleware } from './handlers/trace-id.handler.js';
+import { notFoundHandler } from './handlers/not-found.handler.js';
+import { errorHandler } from './handlers/error.handler.js';
 import { sendSuccess } from './utils/helper/response.js';
 
 const app = express();

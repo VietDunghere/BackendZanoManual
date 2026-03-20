@@ -1,6 +1,6 @@
 import express from 'express';
 import { asyncHandler } from '../utils/classes/async-handler.js';
-import { createRateLimiter } from '../handlers/rate-limit.js';
+import { createRateLimiter } from '../handlers/rate-limit.handler.js';
 import { AuthController } from '../app/controllers/auth.controller.js';
 import { AuthService } from '../app/services/auth.service.js';
 

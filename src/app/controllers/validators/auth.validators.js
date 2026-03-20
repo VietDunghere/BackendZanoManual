@@ -1,3 +1,5 @@
+import { ROLES, VALIDATION } from '../../../configs/constants.js';
+
 function normalizeText(value) {
   return typeof value === 'string' ? value.trim() : '';
 }
@@ -21,36 +23,36 @@ export function validateRegisterPayload(payload) {
   const email = normalizeText(payload.email);
   const password = normalizeText(payload.password);
   const fullName = normalizeText(payload.fullName);
-  const role = normalizeText(payload.role) || 'student';
+  const role = normalizeText(payload.role) || ROLES.STUDENT;
   const className = normalizeText(payload.className) || null;
 
   if (!username) {
     details.push({ field: 'username', issue: 'required' });
-  } else if (username.length < 4 || username.length > 50) {
+  } else if (username.length < VALIDATION.USERNAME_MIN || username.length > VALIDATION.USERNAME_MAX) {
     details.push({ field: 'username', issue: 'length_4_50' });
   }
 
   if (!password) {
     details.push({ field: 'password', issue: 'required' });
-  } else if (password.length < 8 || password.length > 128) {
+  } else if (password.length < VALIDATION.PASSWORD_MIN || password.length > VALIDATION.PASSWORD_MAX) {
     details.push({ field: 'password', issue: 'length_8_128' });
   }
 
   if (!fullName) {
     details.push({ field: 'fullName', issue: 'required' });
-  } else if (fullName.length > 150) {
+  } else if (fullName.length > VALIDATION.FULLNAME_MAX) {
     details.push({ field: 'fullName', issue: 'max_150' });
   }
 
-  if (email && (email.length > 255 || !email.includes('@'))) {
+  if (email && (email.length > VALIDATION.EMAIL_MAX || !email.includes('@'))) {
     details.push({ field: 'email', issue: 'invalid_email' });
   }
 
-  if (!['admin', 'student'].includes(role)) {
+  if (![ROLES.ADMIN, ROLES.STUDENT].includes(role)) {
     details.push({ field: 'role', issue: 'invalid_enum' });
   }
 
-  if (className && className.length > 50) {
+  if (className && className.length > VALIDATION.CLASS_MAX) {
     details.push({ field: 'className', issue: 'max_50' });
   }
 
