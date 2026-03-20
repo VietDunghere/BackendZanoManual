@@ -1,0 +1,819 @@
+{
+  "info": {
+    "name": "BackendZano API",
+    "description": "Postman collection for BackendZano Manual API - Exam Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "backendZano"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "examId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "questionId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "studentId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "attemptId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "resultId",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.accessToken) {",
+                  "  pm.collectionVariables.set('accessToken', res.data.accessToken);",
+                  "  pm.collectionVariables.set('refreshToken', res.data.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"password123\",\n  \"fullName\": \"Test User\",\n  \"email\": \"testuser@example.com\",\n  \"role\": \"student\",\n  \"className\": \"10A1\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Register Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.accessToken) {",
+                  "  pm.collectionVariables.set('accessToken', res.data.accessToken);",
+                  "  pm.collectionVariables.set('refreshToken', res.data.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin1234\",\n  \"fullName\": \"Administrator\",\n  \"email\": \"admin@example.com\",\n  \"role\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.accessToken) {",
+                  "  pm.collectionVariables.set('accessToken', res.data.accessToken);",
+                  "  pm.collectionVariables.set('refreshToken', res.data.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin1234\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.accessToken) {",
+                  "  pm.collectionVariables.set('accessToken', res.data.accessToken);",
+                  "  pm.collectionVariables.set('refreshToken', res.data.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/refresh-token",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "refresh-token"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Exams",
+      "item": [
+        {
+          "name": "List Exams",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams"],
+              "query": [
+                { "key": "q", "value": "", "disabled": true },
+                { "key": "status", "value": "draft", "disabled": true },
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Exam",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.id) {",
+                  "  pm.collectionVariables.set('examId', res.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Kiểm tra Toán học Kỳ 1\",\n  \"description\": \"Đề kiểm tra giữa kỳ môn Toán\",\n  \"type\": \"midterm\",\n  \"semester\": \"2025-2026-1\",\n  \"durationMinutes\": 45,\n  \"status\": \"draft\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams"]
+            }
+          }
+        },
+        {
+          "name": "Get Exam Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams/{{examId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams", "{{examId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Exam",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Kiểm tra Toán học Kỳ 1 (Updated)\",\n  \"description\": \"Cập nhật mô tả đề thi\",\n  \"durationMinutes\": 60,\n  \"status\": \"draft\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams/{{examId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams", "{{examId}}"]
+            }
+          }
+        },
+        {
+          "name": "Publish Exam",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams/{{examId}}/publish",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams", "{{examId}}", "publish"]
+            }
+          }
+        },
+        {
+          "name": "Delete Exam",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams/{{examId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams", "{{examId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Questions",
+      "item": [
+        {
+          "name": "List Questions",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams/{{examId}}/questions?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams", "{{examId}}", "questions"],
+              "query": [
+                { "key": "q", "value": "", "disabled": true },
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Question",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.id) {",
+                  "  pm.collectionVariables.set('questionId', res.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"1 + 1 = ?\",\n  \"optionA\": \"1\",\n  \"optionB\": \"2\",\n  \"optionC\": \"3\",\n  \"optionD\": \"4\",\n  \"correctOptionLabel\": \"B\",\n  \"orderNo\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams/{{examId}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams", "{{examId}}", "questions"]
+            }
+          }
+        },
+        {
+          "name": "Import Questions (Bulk)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"questions\": [\n    {\n      \"content\": \"2 + 2 = ?\",\n      \"optionA\": \"2\",\n      \"optionB\": \"3\",\n      \"optionC\": \"4\",\n      \"optionD\": \"5\",\n      \"correctOptionLabel\": \"C\",\n      \"orderNo\": 1\n    },\n    {\n      \"content\": \"3 x 3 = ?\",\n      \"optionA\": \"6\",\n      \"optionB\": \"9\",\n      \"optionC\": \"12\",\n      \"optionD\": \"15\",\n      \"correctOptionLabel\": \"B\",\n      \"orderNo\": 2\n    },\n    {\n      \"content\": \"10 - 4 = ?\",\n      \"optionA\": \"4\",\n      \"optionB\": \"5\",\n      \"optionC\": \"6\",\n      \"optionD\": \"7\",\n      \"correctOptionLabel\": \"C\",\n      \"orderNo\": 3\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams/{{examId}}/questions/import",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams", "{{examId}}", "questions", "import"]
+            }
+          }
+        },
+        {
+          "name": "Update Question",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"1 + 1 = ? (Updated)\",\n  \"optionA\": \"1\",\n  \"optionB\": \"2\",\n  \"optionC\": \"3\",\n  \"optionD\": \"4\",\n  \"correctOptionLabel\": \"B\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams/{{examId}}/questions/{{questionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams", "{{examId}}", "questions", "{{questionId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Question",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/exams/{{examId}}/questions/{{questionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "exams", "{{examId}}", "questions", "{{questionId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Students",
+      "item": [
+        {
+          "name": "List Students",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/students?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "students"],
+              "query": [
+                { "key": "q", "value": "", "disabled": true },
+                { "key": "className", "value": "10A1", "disabled": true },
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Student",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.id) {",
+                  "  pm.collectionVariables.set('studentId', res.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"student01\",\n  \"password\": \"student123\",\n  \"fullName\": \"Nguyễn Văn A\",\n  \"email\": \"student01@example.com\",\n  \"className\": \"10A1\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "students"]
+            }
+          }
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Nguyễn Văn A (Updated)\",\n  \"email\": \"student01_new@example.com\",\n  \"className\": \"10A2\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "students", "{{studentId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/students/{{studentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "students", "{{studentId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Student Overview",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/students/{{studentId}}/overview",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "students", "{{studentId}}", "overview"]
+            }
+          }
+        },
+        {
+          "name": "List Student Results",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/students/{{studentId}}/results?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "students", "{{studentId}}", "results"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Student Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/students/{{studentId}}/report",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "students", "{{studentId}}", "report"],
+              "query": [
+                { "key": "format", "value": "json", "disabled": true }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Attempts",
+      "item": [
+        {
+          "name": "Get Attempt Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/attempts/{{attemptId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "attempts", "{{attemptId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Stats",
+      "item": [
+        {
+          "name": "Get Stats Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/stats/summary",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "stats", "summary"]
+            }
+          }
+        },
+        {
+          "name": "Export Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/stats/export?format=json",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "stats", "export"],
+              "query": [
+                { "key": "from", "value": "2025-01-01", "disabled": true },
+                { "key": "to", "value": "2025-12-31", "disabled": true },
+                { "key": "format", "value": "json" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Student - Exams",
+      "item": [
+        {
+          "name": "List Available Exams",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/student/exams?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["student", "exams"],
+              "query": [
+                { "key": "q", "value": "", "disabled": true },
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Exam Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/student/exams/{{examId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["student", "exams", "{{examId}}"]
+            }
+          }
+        },
+        {
+          "name": "Start Exam Attempt",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.id) {",
+                  "  pm.collectionVariables.set('attemptId', res.data.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/student/exams/{{examId}}/attempts",
+              "host": ["{{baseUrl}}"],
+              "path": ["student", "exams", "{{examId}}", "attempts"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Student - Attempts",
+      "item": [
+        {
+          "name": "Get Attempt Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/student/attempts/{{attemptId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["student", "attempts", "{{attemptId}}"]
+            }
+          }
+        },
+        {
+          "name": "Save Answer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"selectedOptionLabel\": \"A\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/student/attempts/{{attemptId}}/answers/{{questionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["student", "attempts", "{{attemptId}}", "answers", "{{questionId}}"]
+            }
+          }
+        },
+        {
+          "name": "Submit Attempt",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var res = pm.response.json();",
+                  "if (res.data && res.data.resultId) {",
+                  "  pm.collectionVariables.set('resultId', res.data.resultId);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/student/attempts/{{attemptId}}/submit",
+              "host": ["{{baseUrl}}"],
+              "path": ["student", "attempts", "{{attemptId}}", "submit"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Student - Results",
+      "item": [
+        {
+          "name": "List Results",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/student/results?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["student", "results"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" },
+                { "key": "examId", "value": "{{examId}}", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Result Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/student/results/{{resultId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["student", "results", "{{resultId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

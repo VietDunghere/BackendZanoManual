@@ -20,7 +20,6 @@ export class AdminAttemptsController {
     async getAttemptDetail(req, res) {
         const attemptId = parsePositiveInteger(req.params.attemptId, 'attemptId');
         logger.info('Admin viewed attempt detail', {
-            traceId: req.traceId || null,
             adminUserId: req.auth ? req.auth.userId : null,
             attemptId,
         });

@@ -1,6 +1,5 @@
 import express from 'express';
 import { asyncHandler } from '../utils/classes/async-handler.js';
-import { createRateLimiter } from '../handlers/rate-limit.handler.js';
 import { AuthController } from '../app/controllers/auth.controller.js';
 import { AuthService } from '../app/services/auth.service.js';
 
@@ -8,17 +7,6 @@ const authRouter = express.Router();
 
 const authService = new AuthService();
 const authController = new AuthController(authService);
-
-const authLoginRateLimiter = createRateLimiter({
-    windowMs: 60_000,
-    max: 10,
-    errorMessage: 'Too many login attempts, please try again later',
-});
-
-const authDefaultRateLimiter = createRateLimiter({
-    windowMs: 60_000,
-    max: 30,
-});
 
 /**
  * @openapi
@@ -86,7 +74,7 @@ const authDefaultRateLimiter = createRateLimiter({
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-authRouter.post('/register', authDefaultRateLimiter, asyncHandler(authController.register.bind(authController)));
+authRouter.post('/register', asyncHandler(authController.register.bind(authController)));
 
 /**
  * @openapi
@@ -137,7 +125,7 @@ authRouter.post('/register', authDefaultRateLimiter, asyncHandler(authController
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-authRouter.post('/login', authLoginRateLimiter, asyncHandler(authController.login.bind(authController)));
+authRouter.post('/login', asyncHandler(authController.login.bind(authController)));
 
 /**
  * @openapi
@@ -179,11 +167,7 @@ authRouter.post('/login', authLoginRateLimiter, asyncHandler(authController.logi
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-authRouter.post(
-    '/refresh-token',
-    authDefaultRateLimiter,
-    asyncHandler(authController.refreshToken.bind(authController)),
-);
+authRouter.post('/refresh-token', asyncHandler(authController.refreshToken.bind(authController)));
 
 /**
  * @openapi
@@ -227,6 +211,6 @@ authRouter.post(
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
-authRouter.post('/logout', authDefaultRateLimiter, asyncHandler(authController.logout.bind(authController)));
+authRouter.post('/logout', asyncHandler(authController.logout.bind(authController)));
 
 export { authRouter };

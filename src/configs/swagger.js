@@ -25,9 +25,7 @@ const options = {
       schemas: {
         Meta: {
           type: 'object',
-          properties: {
-            traceId: { type: 'string', nullable: true, example: 'abc123' },
-          },
+          properties: {},
         },
         Pagination: {
           type: 'object',
